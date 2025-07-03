@@ -3,11 +3,11 @@ import {
   NativeStackNavigationProp,
 } from '@react-navigation/native-stack';
 import { Login } from '@screens/login/view';
-import { SignUp } from '@screens/SignUp';
+import { Register } from '@screens/register/view';
 
 type AuthRoutes = {
   login: undefined;
-  signUp: undefined;
+  register: undefined;
 };
 
 export type AuthNavigatorRoutesProps = NativeStackNavigationProp<AuthRoutes>;
@@ -19,7 +19,7 @@ export function AuthRoutes() {
     <Navigator screenOptions={{ headerShown: false }}>
       <Screen name='login' component={Login} />
 
-      <Screen name='signUp' component={SignUp} />
+      <Screen name='register' component={Register} />
     </Navigator>
   );
 }

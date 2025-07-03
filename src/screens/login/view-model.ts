@@ -51,7 +51,7 @@ function useLoginViewModel(): LoginViewModelProps {
   });
 
   function handleNewAccount() {
-    navigation.navigate('signUp');
+    navigation.navigate('register');
   }
 
   async function handleSignIn({ email, password }: FormData) {
