@@ -13,12 +13,17 @@ import { useNavigation } from '@react-navigation/native';
 import { api } from '@services/api';
 import { AppError } from '@utils/AppError';
 
-type FormDataProps = {
+interface TogglePasswordProps {
+  password: boolean;
+  password_confirmation: boolean;
+}
+
+interface FormDataProps {
   name: string;
   email: string;
   password: string;
   password_confirmation: string;
-};
+}
 
 interface RegisterViewModelProps {
   control: Control<FormDataProps, any>;
@@ -27,13 +32,18 @@ interface RegisterViewModelProps {
   isLoading: boolean;
   handleSignUp: (value: FormDataProps) => void;
   handleGoBack: () => void;
-  showPassword: boolean;
-  handleShowPassword: () => void;
+  handleShowPassword: (field: 'password' | 'password_confirmation') => void;
+  visiblePasswords: TogglePasswordProps;
 }
 
 function useRegisterViewModel(): RegisterViewModelProps {
   const [isLoading, setIsLoading] = useState(false);
-  const [showPassword, setShowPassword] = useState(true);
+  const [visiblePasswords, setVisiblePasswords] = useState<TogglePasswordProps>(
+    {
+      password: true,
+      password_confirmation: true,
+    }
+  );
 
   const toast = useToast();
   const { singIn } = useAuth();
@@ -58,8 +68,11 @@ function useRegisterViewModel(): RegisterViewModelProps {
     navigation.goBack();
   }
 
-  function handleShowPassword() {
-    setShowPassword((prev) => !prev);
+  function handleShowPassword(field: 'password' | 'password_confirmation') {
+    setVisiblePasswords((prev) => ({
+      ...prev,
+      [field]: !prev[field],
+    }));
   }
 
   async function handleSignUp({ name, email, password }: FormDataProps) {
@@ -93,7 +106,7 @@ function useRegisterViewModel(): RegisterViewModelProps {
     handleSubmit,
     isLoading,
     handleShowPassword,
-    showPassword,
+    visiblePasswords,
   };
 }
 

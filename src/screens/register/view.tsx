@@ -19,7 +19,7 @@ import { useRegisterViewModel } from './view-model';
 export function Register() {
   const {
     handleShowPassword,
-    showPassword,
+    visiblePasswords,
     control,
     errors,
     handleGoBack,
@@ -91,16 +91,16 @@ export function Register() {
             render={({ field: { onChange, value } }) => (
               <Input
                 placeholder='Senha'
-                secureTextEntry={showPassword}
+                secureTextEntry={visiblePasswords.password}
                 onChangeText={onChange}
                 value={value}
                 errorMessage={errors.password?.message}
                 rightElement={
                   <TouchableOpacity
-                    onPress={handleShowPassword}
+                    onPress={() => handleShowPassword('password')}
                     activeOpacity={0.5}
                   >
-                    {showPassword ? (
+                    {visiblePasswords.password ? (
                       <Ionicons
                         style={{ marginRight: 12 }}
                         name='eye-off'
@@ -127,7 +127,7 @@ export function Register() {
             render={({ field: { onChange, value } }) => (
               <Input
                 placeholder='Confirmar a Senha'
-                secureTextEntry
+                secureTextEntry={!visiblePasswords.password_confirmation}
                 onChangeText={onChange}
                 value={value}
                 onSubmitEditing={handleSubmit(handleSignUp)}
@@ -135,10 +135,10 @@ export function Register() {
                 errorMessage={errors.password_confirmation?.message}
                 rightElement={
                   <TouchableOpacity
-                    onPress={handleShowPassword}
+                    onPress={() => handleShowPassword('password_confirmation')}
                     activeOpacity={0.5}
                   >
-                    {showPassword ? (
+                    {visiblePasswords.password_confirmation ? (
                       <Ionicons
                         style={{ marginRight: 12 }}
                         name='eye-off'
